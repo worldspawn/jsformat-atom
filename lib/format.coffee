@@ -59,7 +59,9 @@ module.exports =
       opts[configKey] = atom.config.get('jsformat.' + configKey) ? defaultValue
 
     if @selectionsAreEmpty editor
+      cursor = editor.getCursorBufferPosition();
       editor.setText(jsbeautify(editor.getText(), opts))
+      editor.setCursorBufferPosition(cursor);
     else
       for selection in editor.getSelections()
         selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
